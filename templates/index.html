@@ -811,19 +811,41 @@
 
       window.speechSynthesis.cancel();
 
-      const utterance = new SpeechSynthesisUtterance(text);
+      // Clean text: strip markdown symbols and emojis
+      let cleanText = text
+        .replace(/\*\*|__|\*|_|`|>|#/g, '')
+        .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2300}-\u{23FF}]/gu, '')
+        .trim();
+
+      if (!cleanText) return;
+
+      const utterance = new SpeechSynthesisUtterance(cleanText);
       utterance.rate = 1.0;
       utterance.pitch = 1.1;
 
+      // Auto-detect Hindi script (Devanagari)
+      const isHindiScript = /[\u0900-\u097F]/.test(cleanText);
+      const isHinglish = /\b(namaste|kaise|kya|karo|haan|nahin|suno|mujhe|tum|mera|kahani|aap|hai|hoon)\b/i.test(cleanText);
+
+      if (isHindiScript || isHinglish) {
+        utterance.lang = 'hi-IN';
+      } else {
+        utterance.lang = 'en-US';
+      }
+
       const voices = window.speechSynthesis.getVoices();
       
-      const preferredVoice = voices.find(v => 
-        (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Zira')) &&
-        (v.lang.includes('en') || v.lang.includes('hi'))
-      ) || voices.find(v => v.lang.includes('en-US') || v.lang.includes('hi-IN'));
+      let selectedVoice = null;
+      if (isHindiScript || isHinglish) {
+        selectedVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('IN')) ||
+                        voices.find(v => v.name.toLowerCase().includes('hindi'));
+      } else {
+        selectedVoice = voices.find(v => (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Zira')) && v.lang.includes('en')) ||
+                        voices.find(v => v.lang.includes('en-US'));
+      }
 
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
       }
 
       window.speechSynthesis.speak(utterance);
