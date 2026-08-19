@@ -3,19 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luna.AI - Standard Edition</title>
+  <title>Luna.AI - VIP Edition</title>
   <style>
     :root {
-      --bg-main: #07080f;
-      --bg-sidebar: #0e1019;
-      --card-bg: rgba(22, 26, 42, 0.75);
-      --accent-pink: #f43f5e;
-      --accent-purple: #a855f7;
-      --accent-gold: #fbbf24;
+      --bg-main: #06070d;
+      --bg-sidebar: #0b0d17;
+      --card-bg: rgba(20, 24, 40, 0.65);
+      --accent-pink: #ff2a5f;
+      --accent-purple: #9d4edd;
+      --accent-cyan: #00f2fe;
+      --accent-gold: #ffb703;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --input-bg: #151824;
+      --input-bg: rgba(18, 22, 36, 0.75);
       --border-color: rgba(255, 255, 255, 0.08);
+      --glow-pink: rgba(255, 42, 95, 0.35);
+      --glow-purple: rgba(157, 78, 221, 0.35);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -26,6 +29,31 @@
       display: flex;
       height: 100vh;
       overflow: hidden;
+      position: relative;
+    }
+
+    /* Ambient Background Glows */
+    body::before, body::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::before {
+      top: -100px;
+      left: -100px;
+      background: var(--accent-purple);
+      opacity: 0.25;
+    }
+    body::after {
+      bottom: -100px;
+      right: -100px;
+      background: var(--accent-pink);
+      opacity: 0.2;
     }
 
     #app-loader {
@@ -62,6 +90,7 @@
       padding: 24px 16px;
       border-right: 1px solid var(--border-color);
       z-index: 10;
+      backdrop-filter: blur(20px);
     }
 
     .brand-container {
@@ -69,17 +98,17 @@
     }
 
     .brand-logo-wrapper {
-      width: 38px; height: 38px; border-radius: 12px;
+      width: 40px; height: 40px; border-radius: 12px;
       background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
       display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
+      box-shadow: 0 0 20px var(--glow-pink);
       overflow: hidden;
       animation: logoPulse 3s ease-in-out infinite alternate;
     }
 
     @keyframes logoPulse {
-      0% { box-shadow: 0 0 10px rgba(244, 63, 94, 0.3); }
-      100% { box-shadow: 0 0 22px rgba(168, 85, 247, 0.6); }
+      0% { box-shadow: 0 0 10px var(--glow-pink); transform: scale(1); }
+      100% { box-shadow: 0 0 25px var(--glow-purple); transform: scale(1.03); }
     }
 
     .brand-logo-img { width: 100%; height: 100%; object-fit: cover; }
@@ -93,6 +122,7 @@
       font-size: 9px; font-weight: 800;
       background: linear-gradient(135deg, var(--accent-gold), #f59e0b);
       color: #000; padding: 2px 6px; border-radius: 6px; letter-spacing: 1px; margin-left: auto;
+      box-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
     }
 
     .new-chat-btn {
@@ -100,11 +130,11 @@
       padding: 12px; border-radius: 12px; color: #fff; font-weight: 600;
       background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
       border: none; cursor: pointer; font-size: 14px; width: 100%; margin-bottom: 20px;
-      box-shadow: 0 4px 18px rgba(244, 63, 94, 0.3);
-      transition: all 0.3s;
+      box-shadow: 0 4px 18px var(--glow-pink);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .new-chat-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(244, 63, 94, 0.5); }
+    .new-chat-btn:hover { transform: translateY(-2px) scale(1.01); box-shadow: 0 6px 25px var(--glow-purple); }
 
     .recents-label {
       font-size: 11px; font-weight: 700; color: var(--text-muted);
@@ -113,14 +143,14 @@
 
     .recents-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
     .recents-list::-webkit-scrollbar { width: 4px; }
-    .recents-list::-webkit-scrollbar-thumb { background: rgba(244, 63, 94, 0.3); border-radius: 4px; }
+    .recents-list::-webkit-scrollbar-thumb { background: rgba(255, 42, 95, 0.3); border-radius: 4px; }
 
     .recent-item-container {
       display: flex; align-items: center; justify-content: space-between;
       border-radius: 8px; padding-right: 4px; transition: all 0.2s;
     }
     .recent-item-container:hover { background: rgba(255, 255, 255, 0.05); }
-    .recent-item-container.active { background: rgba(244, 63, 94, 0.15); border-left: 3px solid var(--accent-pink); }
+    .recent-item-container.active { background: rgba(255, 42, 95, 0.15); border-left: 3px solid var(--accent-pink); }
 
     .recent-item {
       display: flex; align-items: center; gap: 10px; padding: 10px;
@@ -135,7 +165,7 @@
       display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px;
     }
     .recent-item-container:hover .sidebar-action-btn { opacity: 1; }
-    .sidebar-action-btn:hover { color: var(--accent-pink); background: rgba(244, 63, 94, 0.15); }
+    .sidebar-action-btn:hover { color: var(--accent-pink); background: rgba(255, 42, 95, 0.15); }
 
     .profile-section {
       display: flex; align-items: center; justify-content: space-between;
@@ -146,7 +176,7 @@
     .main-content {
       flex: 1; display: flex; flex-direction: column;
       justify-content: space-between; align-items: center;
-      padding: 40px 24px 24px; position: relative;
+      padding: 40px 24px 24px; position: relative; z-index: 1;
     }
 
     .hero-container {
@@ -162,7 +192,7 @@
     .glowing-ring {
       position: absolute; width: 100%; height: 100%; border-radius: 50%;
       border: 3px solid transparent; border-top-color: var(--accent-pink); border-right-color: var(--accent-purple);
-      box-shadow: 0 0 35px rgba(244, 63, 94, 0.4);
+      box-shadow: 0 0 35px var(--glow-pink);
       animation: spin 5s linear infinite;
     }
 
@@ -175,26 +205,27 @@
     @keyframes spin { 100% { transform: rotate(360deg); } }
     @keyframes spinReverse { 100% { transform: rotate(-360deg); } }
 
-    .hero-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 24px; }
+    .hero-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.5px; }
     .hero-title span {
-      background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple), var(--accent-cyan));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
     .suggestion-container { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
     .chip {
-      background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color);
-      padding: 10px 18px; border-radius: 20px; font-size: 13px; color: var(--text-muted);
-      cursor: pointer; transition: all 0.3s;
-      animation: floatChip 3s ease-in-out infinite alternate;
+      background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color);
+      padding: 10px 20px; border-radius: 20px; font-size: 13px; color: var(--text-muted);
+      cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      animation: floatChip 4s ease-in-out infinite alternate;
     }
-    .chip:nth-child(2) { animation-delay: 0.5s; }
-    .chip:nth-child(3) { animation-delay: 1s; }
+    .chip:nth-child(2) { animation-delay: 0.8s; }
+    .chip:nth-child(3) { animation-delay: 1.6s; }
 
-    @keyframes floatChip { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
+    @keyframes floatChip { 0% { transform: translateY(0); } 100% { transform: translateY(-8px); } }
     .chip:hover {
-      background: rgba(244, 63, 94, 0.15); border-color: var(--accent-pink); color: #fff;
-      box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+      background: rgba(255, 42, 95, 0.12); border-color: var(--accent-pink); color: #fff;
+      box-shadow: 0 0 20px var(--glow-pink); transform: translateY(-4px) scale(1.02);
     }
 
     .chat-stream {
@@ -207,24 +238,25 @@
     .msg-wrapper.luna { align-self: flex-start; }
 
     .msg {
-      padding: 15px 22px; border-radius: 20px; font-size: 15px; line-height: 1.6;
-      animation: msgPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      padding: 16px 22px; border-radius: 20px; font-size: 15px; line-height: 1.6;
+      backdrop-filter: blur(12px);
+      animation: msgPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     @keyframes msgPop {
-      from { opacity: 0; transform: translateY(12px) scale(0.96); }
+      from { opacity: 0; transform: translateY(16px) scale(0.95); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .user .msg {
-      background: linear-gradient(135deg, rgba(244, 63, 94, 0.25), rgba(168, 85, 247, 0.15));
-      border: 1px solid rgba(244, 63, 94, 0.4); border-bottom-right-radius: 4px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      background: linear-gradient(135deg, rgba(255, 42, 95, 0.3), rgba(157, 78, 221, 0.2));
+      border: 1px solid rgba(255, 42, 95, 0.4); border-bottom-right-radius: 4px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
     .luna .msg {
       background: var(--card-bg); border-bottom-left-radius: 4px; border: 1px solid var(--border-color);
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-purple);
     }
 
     .voice-wave {
@@ -255,12 +287,13 @@
 
     .input-container {
       width: 100%; max-width: 800px; background: var(--input-bg);
-      border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 30px;
+      border: 1px solid rgba(255, 42, 95, 0.3); border-radius: 30px;
       padding: 8px 16px 8px 20px; display: flex; align-items: center; gap: 12px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4), 0 0 15px rgba(244, 63, 94, 0.15);
-      transition: border-color 0.3s, opacity 0.3s;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), 0 0 20px var(--glow-pink);
+      backdrop-filter: blur(16px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .input-container:focus-within { border-color: var(--accent-pink); }
+    .input-container:focus-within { border-color: var(--accent-pink); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px var(--glow-pink); }
     .input-container.disabled { opacity: 0.5; pointer-events: none; }
 
     .input-container input {
@@ -273,10 +306,10 @@
       display: flex; align-items: center; justify-content: center;
     }
     .icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
-    .icon-btn:hover { color: var(--accent-pink); transform: scale(1.1); }
+    .icon-btn:hover { color: var(--accent-pink); transform: scale(1.15); }
     .mic-active { color: var(--accent-pink) !important; animation: pulseMic 1s infinite alternate; }
 
-    @keyframes pulseMic { from { opacity: 0.5; } to { opacity: 1; } }
+    @keyframes pulseMic { from { opacity: 0.5; transform: scale(1); } to { opacity: 1; transform: scale(1.15); } }
 
     .disclaimer { font-size: 11px; color: var(--text-muted); margin-top: 12px; }
     #logo-input { display: none; }
@@ -296,7 +329,7 @@
     <div>
       <div class="brand-container" onclick="document.getElementById('logo-input').click()" title="Click to Upload Custom Logo">
         <div class="brand-logo-wrapper">
-          <img id="brand-logo" class="brand-logo-img" src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+          <img id="brand-logo" class="brand-logo-img" src="https://via.placeholder.com/150" alt="Logo">
         </div>
         <span class="brand-name">Luna.AI</span>
         <span class="vip-badge">VIP</span>
@@ -314,7 +347,7 @@
 
     <div class="profile-section">
       <div style="display: flex; align-items: center; gap: 10px;">
-        <img class="profile-img" src="{{ url_for('static', filename='logo.png') }}" alt="User">
+        <img class="profile-img" src="https://via.placeholder.com/150" alt="User">
         <div>
           <div style="font-size: 13.5px; font-weight: 600; color: #fff;">Luna Assistant</div>
           <div style="font-size: 11px; color: var(--accent-pink);">VIP Animated</div>
@@ -575,56 +608,28 @@
       const lower = text.toLowerCase();
       const memory = getStoredMemory();
 
-      // 1. Developer / Creator queries
-      if (lower.includes('developer') || lower.includes('devloper') || lower.includes('creator') || lower.includes('who made you') || lower.includes('who created you')) {
-        return `I was developed by Arnav! 🚀`;
-      }
-
-      // 2. Short affirmations & casual acknowledgments
-      if (/^(ok|okay|k|kk|nice|cool|awesome|great|got it|sure|alright|fine|yep|yeah)$/i.test(lower)) {
-        const casualReplies = [
-          "Awesome! Let me know if you need anything else 😊",
-          "Got it! I'm here if you have more questions 👍",
-          "Cool! What shall we talk about next?",
-          "Perfect! 😊"
-        ];
-        return casualReplies[Math.floor(Math.random() * casualReplies.length)];
-      }
-
-      // 3. Compliments
-      if (lower.includes('cool') || lower.includes('awesome') || lower.includes('smart') || lower.includes('nice') || lower.includes('best')) {
-        return `Aww, thank you! You're awesome too! 😊 How can I help you next?`;
-      }
-
-      // 4. Greetings
-      if (/^(hi|hello|hey|heyy|namaste|greetings)$/i.test(lower)) {
-        return `Hey there! What's on your mind today? ✨`;
-      }
-
-      // 5. Image generation prompts
       if (lower.includes('generate image') || lower.includes('draw') || lower.includes('create image') || lower.includes('picture of') || lower.includes('photo of') || lower.includes('image prompt')) {
         return `✨ **Image Prompt Recommendation** ✨\n\nI don't directly render image files, but here is an optimized prompt for Midjourney/DALL-E:\n\n> *"${text.replace(/generate image|draw|create image/gi, '').trim()}, cinematic lighting, hyper-realistic, 8k resolution, highly detailed digital art style --ar 16:9"*`;
       }
 
-      // 6. Memory check (User name)
-      if (memory.userName && (lower.includes('who am i') || lower.includes('my name') || lower.includes('mera naam'))) {
-        return `You are ${memory.userName}! I remember you 😊`;
-      }
-
-      // 7. Language detection (Hindi / Hinglish)
       const isHindiScript = /[\u0900-\u097F]/.test(text);
       const isHinglish = /\b(namaste|kaise|kya|karo|haan|nahin|suno|mujhe|tum|mera|kahani)\b/i.test(text);
+
+      if (memory.userName && (lower.includes('who am i') || lower.includes('my name') || lower.includes('mera naam'))) {
+        if (isHindiScript) return `आप ${memory.userName} हैं! मुझे याद है 😊`;
+        if (isHinglish) return `Aapka naam ${memory.userName} hai! Mujhe bilkul yaad hai 😊`;
+        return `You are ${memory.userName}! I remember you across our chats 😊`;
+      }
 
       if (isHindiScript) {
         return `नमस्ते! मैं आपकी क्या सहायता कर सकती हूँ? 🌸`;
       }
 
       if (isHinglish) {
-        return `Haan bilkul! Main aapki help karne ke liye tayar hoon ✨`;
+        return `Haan bilkul! Main aapki help karne ke liye tayar hoon ✨ Aap batayein kya karna hai?`;
       }
 
-      // 8. General conversational fallback
-      return `Got it! Tell me more about that, or let me know what you'd like to work on next.`;
+      return `I'm Luna! I've saved your context across our sessions. How can I assist you right now? 😊`;
     }
 
     async function sendText() {
@@ -839,39 +844,19 @@
 
       window.speechSynthesis.cancel();
 
-      let cleanText = text
-        .replace(/\*\*|__|\*|_|`|>|#/g, '')
-        .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2300}-\u{23FF}]/gu, '')
-        .trim();
-
-      if (!cleanText) return;
-
-      const utterance = new SpeechSynthesisUtterance(cleanText);
+      const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 1.0;
       utterance.pitch = 1.1;
 
-      const isHindiScript = /[\u0900-\u097F]/.test(cleanText);
-      const isHinglish = /\b(namaste|kaise|kya|karo|haan|nahin|suno|mujhe|tum|mera|kahani|aap|hai|hoon)\b/i.test(cleanText);
-
-      if (isHindiScript || isHinglish) {
-        utterance.lang = 'hi-IN';
-      } else {
-        utterance.lang = 'en-US';
-      }
-
       const voices = window.speechSynthesis.getVoices();
       
-      let selectedVoice = null;
-      if (isHindiScript || isHinglish) {
-        selectedVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('IN')) ||
-                        voices.find(v => v.name.toLowerCase().includes('hindi'));
-      } else {
-        selectedVoice = voices.find(v => (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Zira')) && v.lang.includes('en')) ||
-                        voices.find(v => v.lang.includes('en-US'));
-      }
+      const preferredVoice = voices.find(v => 
+        (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Zira')) &&
+        (v.lang.includes('en') || v.lang.includes('hi'))
+      ) || voices.find(v => v.lang.includes('en-US') || v.lang.includes('hi-IN'));
 
-      if (selectedVoice) {
-        utterance.voice = selectedVoice;
+      if (preferredVoice) {
+        utterance.voice = preferredVoice;
       }
 
       window.speechSynthesis.speak(utterance);
