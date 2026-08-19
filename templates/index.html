@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luna.AI - VIP Edition</title>
+  <title>Luna.AI - Luxury Edition</title>
   <style>
     :root {
-      --bg-main: #06070d;
-      --bg-sidebar: #0b0d17;
-      --card-bg: rgba(20, 24, 40, 0.65);
-      --accent-pink: #ff2a5f;
-      --accent-purple: #9d4edd;
-      --accent-cyan: #00f2fe;
-      --accent-gold: #ffb703;
+      --bg-main: #05070f;
+      --bg-sidebar: #0a0d18;
+      --card-bg: rgba(16, 22, 38, 0.7);
+      --accent-emerald: #00e6a8;
+      --accent-sapphire: #3b82f6;
+      --accent-gold: #f59e0b;
+      --accent-violet: #8b5cf6;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --input-bg: rgba(18, 22, 36, 0.75);
+      --input-bg: rgba(13, 17, 30, 0.85);
       --border-color: rgba(255, 255, 255, 0.08);
-      --glow-pink: rgba(255, 42, 95, 0.35);
-      --glow-purple: rgba(157, 78, 221, 0.35);
+      --glow-emerald: rgba(0, 230, 168, 0.25);
+      --glow-sapphire: rgba(59, 130, 246, 0.25);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -32,28 +32,34 @@
       position: relative;
     }
 
-    /* Ambient Background Glows */
+    /* Luxury Animated Ambient Backgrounds */
     body::before, body::after {
       content: '';
       position: absolute;
-      width: 400px;
-      height: 400px;
+      width: 500px;
+      height: 500px;
       border-radius: 50%;
       filter: blur(140px);
       pointer-events: none;
       z-index: 0;
+      animation: floatGlow 10s ease-in-out infinite alternate;
     }
     body::before {
-      top: -100px;
-      left: -100px;
-      background: var(--accent-purple);
-      opacity: 0.25;
+      top: -150px;
+      left: -150px;
+      background: linear-gradient(135deg, var(--accent-sapphire), var(--accent-emerald));
+      opacity: 0.2;
     }
     body::after {
-      bottom: -100px;
-      right: -100px;
-      background: var(--accent-pink);
-      opacity: 0.2;
+      bottom: -150px;
+      right: -150px;
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-gold));
+      opacity: 0.15;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, 30px) scale(1.1); }
     }
 
     #app-loader {
@@ -73,13 +79,13 @@
 
     .loader-orb {
       position: absolute; width: 100%; height: 100%; border-radius: 50%;
-      border: 3px solid transparent; border-top-color: var(--accent-pink); border-right-color: var(--accent-purple);
+      border: 3px solid transparent; border-top-color: var(--accent-emerald); border-right-color: var(--accent-sapphire);
       animation: spin 1s linear infinite;
     }
 
     .loader-orb-inner {
       position: absolute; width: 70%; height: 70%; border-radius: 50%;
-      border: 3px solid transparent; border-bottom-color: var(--accent-gold); border-left-color: var(--accent-pink);
+      border: 3px solid transparent; border-bottom-color: var(--accent-gold); border-left-color: var(--accent-emerald);
       animation: spinReverse 0.8s linear infinite;
     }
 
@@ -99,42 +105,42 @@
 
     .brand-logo-wrapper {
       width: 40px; height: 40px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+      background: linear-gradient(135deg, var(--accent-emerald), var(--accent-sapphire));
       display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 0 20px var(--glow-pink);
+      box-shadow: 0 0 20px var(--glow-emerald);
       overflow: hidden;
       animation: logoPulse 3s ease-in-out infinite alternate;
     }
 
     @keyframes logoPulse {
-      0% { box-shadow: 0 0 10px var(--glow-pink); transform: scale(1); }
-      100% { box-shadow: 0 0 25px var(--glow-purple); transform: scale(1.03); }
+      0% { box-shadow: 0 0 10px var(--glow-emerald); transform: scale(1); }
+      100% { box-shadow: 0 0 25px var(--glow-sapphire); transform: scale(1.03); }
     }
 
     .brand-logo-img { width: 100%; height: 100%; object-fit: cover; }
     .brand-name {
       font-size: 1.25rem; font-weight: 700;
-      background: linear-gradient(90deg, #fff, var(--accent-pink));
+      background: linear-gradient(90deg, #fff, var(--accent-emerald));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
     .vip-badge {
       font-size: 9px; font-weight: 800;
-      background: linear-gradient(135deg, var(--accent-gold), #f59e0b);
+      background: linear-gradient(135deg, var(--accent-gold), #d97706);
       color: #000; padding: 2px 6px; border-radius: 6px; letter-spacing: 1px; margin-left: auto;
-      box-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
     }
 
     .new-chat-btn {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       padding: 12px; border-radius: 12px; color: #fff; font-weight: 600;
-      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+      background: linear-gradient(135deg, var(--accent-emerald), var(--accent-sapphire));
       border: none; cursor: pointer; font-size: 14px; width: 100%; margin-bottom: 20px;
-      box-shadow: 0 4px 18px var(--glow-pink);
+      box-shadow: 0 4px 18px var(--glow-emerald);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .new-chat-btn:hover { transform: translateY(-2px) scale(1.01); box-shadow: 0 6px 25px var(--glow-purple); }
+    .new-chat-btn:hover { transform: translateY(-2px) scale(1.01); box-shadow: 0 6px 25px var(--glow-sapphire); }
 
     .recents-label {
       font-size: 11px; font-weight: 700; color: var(--text-muted);
@@ -143,14 +149,14 @@
 
     .recents-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
     .recents-list::-webkit-scrollbar { width: 4px; }
-    .recents-list::-webkit-scrollbar-thumb { background: rgba(255, 42, 95, 0.3); border-radius: 4px; }
+    .recents-list::-webkit-scrollbar-thumb { background: rgba(0, 230, 168, 0.3); border-radius: 4px; }
 
     .recent-item-container {
       display: flex; align-items: center; justify-content: space-between;
       border-radius: 8px; padding-right: 4px; transition: all 0.2s;
     }
     .recent-item-container:hover { background: rgba(255, 255, 255, 0.05); }
-    .recent-item-container.active { background: rgba(255, 42, 95, 0.15); border-left: 3px solid var(--accent-pink); }
+    .recent-item-container.active { background: rgba(0, 230, 168, 0.12); border-left: 3px solid var(--accent-emerald); }
 
     .recent-item {
       display: flex; align-items: center; gap: 10px; padding: 10px;
@@ -165,13 +171,13 @@
       display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px;
     }
     .recent-item-container:hover .sidebar-action-btn { opacity: 1; }
-    .sidebar-action-btn:hover { color: var(--accent-pink); background: rgba(255, 42, 95, 0.15); }
+    .sidebar-action-btn:hover { color: var(--accent-emerald); background: rgba(0, 230, 168, 0.15); }
 
     .profile-section {
       display: flex; align-items: center; justify-content: space-between;
       padding-top: 16px; border-top: 1px solid var(--border-color);
     }
-    .profile-img { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--accent-pink); }
+    .profile-img { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--accent-emerald); }
 
     .main-content {
       flex: 1; display: flex; flex-direction: column;
@@ -191,14 +197,14 @@
 
     .glowing-ring {
       position: absolute; width: 100%; height: 100%; border-radius: 50%;
-      border: 3px solid transparent; border-top-color: var(--accent-pink); border-right-color: var(--accent-purple);
-      box-shadow: 0 0 35px var(--glow-pink);
+      border: 3px solid transparent; border-top-color: var(--accent-emerald); border-right-color: var(--accent-sapphire);
+      box-shadow: 0 0 35px var(--glow-emerald);
       animation: spin 5s linear infinite;
     }
 
     .glowing-ring-inner {
       position: absolute; width: 75%; height: 75%; border-radius: 50%;
-      border: 3px solid transparent; border-bottom-color: var(--accent-gold); border-left-color: var(--accent-pink);
+      border: 3px solid transparent; border-bottom-color: var(--accent-gold); border-left-color: var(--accent-emerald);
       animation: spinReverse 3.5s linear infinite;
     }
 
@@ -207,7 +213,7 @@
 
     .hero-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.5px; }
     .hero-title span {
-      background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple), var(--accent-cyan));
+      background: linear-gradient(90deg, var(--accent-emerald), var(--accent-sapphire), var(--accent-gold));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
@@ -224,13 +230,27 @@
 
     @keyframes floatChip { 0% { transform: translateY(0); } 100% { transform: translateY(-8px); } }
     .chip:hover {
-      background: rgba(255, 42, 95, 0.12); border-color: var(--accent-pink); color: #fff;
-      box-shadow: 0 0 20px var(--glow-pink); transform: translateY(-4px) scale(1.02);
+      background: rgba(0, 230, 168, 0.1); border-color: var(--accent-emerald); color: #fff;
+      box-shadow: 0 0 20px var(--glow-emerald); transform: translateY(-4px) scale(1.02);
     }
 
+    /* Custom Modern Scrollbars for Chat Stream */
     .chat-stream {
       width: 100%; max-width: 800px; flex: 1; overflow-y: auto;
       display: flex; flex-direction: column; gap: 18px; margin-bottom: 20px; padding-right: 10px;
+    }
+    .chat-stream::-webkit-scrollbar {
+      width: 6px;
+    }
+    .chat-stream::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .chat-stream::-webkit-scrollbar-thumb {
+      background: rgba(0, 230, 168, 0.25);
+      border-radius: 10px;
+    }
+    .chat-stream::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-emerald);
     }
 
     .msg-wrapper { display: flex; flex-direction: column; max-width: 80%; position: relative; }
@@ -249,14 +269,14 @@
     }
 
     .user .msg {
-      background: linear-gradient(135deg, rgba(255, 42, 95, 0.3), rgba(157, 78, 221, 0.2));
-      border: 1px solid rgba(255, 42, 95, 0.4); border-bottom-right-radius: 4px;
+      background: linear-gradient(135deg, rgba(0, 230, 168, 0.2), rgba(59, 130, 246, 0.2));
+      border: 1px solid rgba(0, 230, 168, 0.35); border-bottom-right-radius: 4px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
     .luna .msg {
       background: var(--card-bg); border-bottom-left-radius: 4px; border: 1px solid var(--border-color);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-purple);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-sapphire);
     }
 
     .voice-wave {
@@ -264,7 +284,7 @@
     }
 
     .wave-bar {
-      width: 3px; height: 100%; background: var(--accent-pink); border-radius: 2px;
+      width: 3px; height: 100%; background: var(--accent-emerald); border-radius: 2px;
       animation: wave 0.8s infinite ease-in-out alternate;
     }
     .wave-bar:nth-child(2) { animation-delay: 0.2s; }
@@ -287,13 +307,13 @@
 
     .input-container {
       width: 100%; max-width: 800px; background: var(--input-bg);
-      border: 1px solid rgba(255, 42, 95, 0.3); border-radius: 30px;
+      border: 1px solid rgba(0, 230, 168, 0.3); border-radius: 30px;
       padding: 8px 16px 8px 20px; display: flex; align-items: center; gap: 12px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), 0 0 20px var(--glow-pink);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), 0 0 20px var(--glow-emerald);
       backdrop-filter: blur(16px);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .input-container:focus-within { border-color: var(--accent-pink); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px var(--glow-pink); }
+    .input-container:focus-within { border-color: var(--accent-emerald); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px var(--glow-emerald); }
     .input-container.disabled { opacity: 0.5; pointer-events: none; }
 
     .input-container input {
@@ -306,8 +326,8 @@
       display: flex; align-items: center; justify-content: center;
     }
     .icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
-    .icon-btn:hover { color: var(--accent-pink); transform: scale(1.15); }
-    .mic-active { color: var(--accent-pink) !important; animation: pulseMic 1s infinite alternate; }
+    .icon-btn:hover { color: var(--accent-emerald); transform: scale(1.15); }
+    .mic-active { color: var(--accent-emerald) !important; animation: pulseMic 1s infinite alternate; }
 
     @keyframes pulseMic { from { opacity: 0.5; transform: scale(1); } to { opacity: 1; transform: scale(1.15); } }
 
@@ -322,7 +342,7 @@
       <div class="loader-orb"></div>
       <div class="loader-orb-inner"></div>
     </div>
-    <div style="font-size: 12px; color: var(--accent-pink); letter-spacing: 3px; font-weight: 700;">LUNA VIP ANIMATED</div>
+    <div style="font-size: 12px; color: var(--accent-emerald); letter-spacing: 3px; font-weight: 700;">LUNA VIP LUXURY</div>
   </div>
 
   <div class="sidebar">
@@ -350,7 +370,7 @@
         <img class="profile-img" src="https://via.placeholder.com/150" alt="User">
         <div>
           <div style="font-size: 13.5px; font-weight: 600; color: #fff;">Luna Assistant</div>
-          <div style="font-size: 11px; color: var(--accent-pink);">VIP Animated</div>
+          <div style="font-size: 11px; color: var(--accent-emerald);">VIP Edition</div>
         </div>
       </div>
       <div style="display: flex; gap: 4px;">
@@ -387,11 +407,11 @@
         <button class="icon-btn" id="micBtn" onclick="startVoice()" title="Speak">
           <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
         </button>
-        <button class="icon-btn" id="sendBtn" onclick="sendText()" style="color: var(--accent-pink);" title="Send Message">
+        <button class="icon-btn" id="sendBtn" onclick="sendText()" style="color: var(--accent-emerald);" title="Send Message">
           <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
       </div>
-      <div class="disclaimer">Luna.AI is AI and can make mistakes.</div>
+      <div class="disclaimer">Luna.AI VIP Edition - Powered by Intelligent Context</div>
     </div>
   </div>
 
@@ -443,10 +463,6 @@
         memory.userName = text.split(/my name is /i)[1].split('.')[0].trim();
       } else if (lower.includes('mera naam ')) {
         memory.userName = text.split(/mera naam /i)[1].split('hai')[0].trim();
-      }
-      
-      if (lower.includes('i like ') || lower.includes('i love ')) {
-        memory.preference = text;
       }
       
       localStorage.setItem('luna_memory', JSON.stringify(memory));
@@ -603,33 +619,54 @@
       sendText();
     }
 
+    /* Smart Dynamic AI Reply Engine for Frontend Fallback */
     function generateAssistantReply(userText) {
       const text = userText.trim();
       const lower = text.toLowerCase();
       const memory = getStoredMemory();
 
-      if (lower.includes('generate image') || lower.includes('draw') || lower.includes('create image') || lower.includes('picture of') || lower.includes('photo of') || lower.includes('image prompt')) {
-        return `✨ **Image Prompt Recommendation** ✨\n\nI don't directly render image files, but here is an optimized prompt for Midjourney/DALL-E:\n\n> *"${text.replace(/generate image|draw|create image/gi, '').trim()}, cinematic lighting, hyper-realistic, 8k resolution, highly detailed digital art style --ar 16:9"*`;
+      // Greetings
+      if (/\b(hi|hello|hey|greetings|hola)\b/i.test(lower)) {
+        const nameGreeting = memory.userName ? `, ${memory.userName}` : '';
+        return `Hello${nameGreeting}! 😊 I'm Luna. How can I assist you today?`;
       }
 
-      const isHindiScript = /[\u0900-\u097F]/.test(text);
-      const isHinglish = /\b(namaste|kaise|kya|karo|haan|nahin|suno|mujhe|tum|mera|kahani)\b/i.test(text);
+      // Check status
+      if (lower.includes('you ok') || lower.includes('how are you')) {
+        return `I'm doing great! Everything is running smoothly. Thanks for asking! How are you doing today? ✨`;
+      }
 
+      // Name recall
       if (memory.userName && (lower.includes('who am i') || lower.includes('my name') || lower.includes('mera naam'))) {
-        if (isHindiScript) return `आप ${memory.userName} हैं! मुझे याद है 😊`;
-        if (isHinglish) return `Aapka naam ${memory.userName} hai! Mujhe bilkul yaad hai 😊`;
-        return `You are ${memory.userName}! I remember you across our chats 😊`;
+        return `You are ${memory.userName}! I remember you. 😊`;
       }
 
-      if (isHindiScript) {
-        return `नमस्ते! मैं आपकी क्या सहायता कर सकती हूँ? 🌸`;
+      // Hindi / Hinglish checks
+      if (/[\u0900-\u097F]/.test(text)) {
+        return `नमस्ते! मैं आपकी किस प्रकार सहायता कर सकती हूँ? 🌸`;
+      }
+      if (/\b(namaste|kaise|kya|karo|haan|nahin|suno|mujhe|tum|mera|kahani)\b/i.test(text)) {
+        return `Haan bilkul! Main aapki madad karne ke liye yahan hoon. Aap kya poochna chahte hain? ✨`;
       }
 
-      if (isHinglish) {
-        return `Haan bilkul! Main aapki help karne ke liye tayar hoon ✨ Aap batayein kya karna hai?`;
+      // Story / Creative
+      if (lower.includes('story') || lower.includes('kahani')) {
+        return `Once upon a time in a vibrant digital universe, an AI named Luna collaborated with a creative developer to build something truly magnificent... What kind of story would you like to hear next? 📖`;
       }
 
-      return `I'm Luna! I've saved your context across our sessions. How can I assist you right now? 😊`;
+      // Image prompt
+      if (lower.includes('image') || lower.includes('draw') || lower.includes('photo')) {
+        return `✨ **Image Prompt Recommendation** ✨\n\nHere is an optimized prompt for Midjourney/DALL-E:\n\n> *"${text.replace(/generate image|draw|create image/gi, '').trim()}, cinematic lighting, highly detailed luxury digital art style, 8k resolution --ar 16:9"*`;
+      }
+
+      // Contextual Default Responses
+      const defaultReplies = [
+        `I understand you're asking about "${text}". Could you elaborate a bit more so I can give you a precise answer? 😊`,
+        `That's an interesting point regarding "${text}". How would you like us to proceed with this?`,
+        `I've processed your message: "${text}". I am here to help you brainstorm, code, or write whatever you need! ✨`
+      ];
+
+      return defaultReplies[Math.floor(Math.random() * defaultReplies.length)];
     }
 
     async function sendText() {
@@ -670,8 +707,10 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: text })
         });
-        const data = await res.json();
+        
+        if (!res.ok) throw new Error("API Server not responding");
 
+        const data = await res.json();
         typingIndicator.remove();
 
         const replyText = (data && data.success && data.reply) ? data.reply : generateAssistantReply(text);
@@ -682,6 +721,7 @@
         speakOutLoud(replyText);
 
       } catch (err) {
+        // Fallback to local dynamic generator if API route fails
         typingIndicator.remove();
         const fallbackReply = generateAssistantReply(text);
         sess.messages.push({ text: fallbackReply, sender: 'luna' });
@@ -757,7 +797,7 @@
       if (!sess || !sess.messages[index]) return;
 
       const oldText = sess.messages[index].text;
-      const newText = prompt("Edit your latest message:", oldText);
+      const newText = prompt("Edit your message:", oldText);
 
       if (newText && newText.trim() !== "") {
         sess.messages[index].text = newText.trim();
