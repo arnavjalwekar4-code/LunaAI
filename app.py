@@ -7,10 +7,6 @@ from google.genai import types
 app = Flask(__name__)
 CORS(app)
 
-# Pull API Key safely from environment variable
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-client = genai.Client(api_key=GEMINI_API_KEY)
-
 # Global chat history array to remember conversations
 chat_history = []
 
@@ -27,6 +23,10 @@ def chat():
         
         if not user_message:
             return jsonify({"success": False, "error": "Empty message"})
+
+        # Initialize client directly inside route to grab latest environment variable
+        api_key = os.environ.get("GEMINI_API_KEY")
+        client = genai.Client(api_key=api_key)
 
         # Append user message to history
         chat_history.append({"role": "user", "parts": [{"text": user_message}]})
