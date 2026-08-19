@@ -575,6 +575,12 @@
       const lower = text.toLowerCase();
       const memory = getStoredMemory();
 
+      // Check for developer/creator questions
+      if (lower.includes('developer') || lower.includes('devloper') || lower.includes('creator') || lower.includes('who made you') || lower.includes('who created you')) {
+        return `I was developed by Arnav! 🚀`;
+      }
+
+      // Check for image generation prompts
       if (lower.includes('generate image') || lower.includes('draw') || lower.includes('create image') || lower.includes('picture of') || lower.includes('photo of') || lower.includes('image prompt')) {
         return `✨ **Image Prompt Recommendation** ✨\n\nI don't directly render image files, but here is an optimized prompt for Midjourney/DALL-E:\n\n> *"${text.replace(/generate image|draw|create image/gi, '').trim()}, cinematic lighting, hyper-realistic, 8k resolution, highly detailed digital art style --ar 16:9"*`;
       }
@@ -596,7 +602,11 @@
         return `Haan bilkul! Main aapki help karne ke liye tayar hoon ✨ Aap batayein kya karna hai?`;
       }
 
-      return `I'm Luna! I've saved your context across our sessions. How can I assist you right now? 😊`;
+      if (lower === 'hi' || lower === 'hello' || lower === 'hey') {
+        return `Hello! How can I help you today? 😊`;
+      }
+
+      return `I'm Luna! How can I assist you with "${text}"? 😊`;
     }
 
     async function sendText() {
@@ -811,7 +821,6 @@
 
       window.speechSynthesis.cancel();
 
-      // Clean text: strip markdown symbols and emojis
       let cleanText = text
         .replace(/\*\*|__|\*|_|`|>|#/g, '')
         .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2300}-\u{23FF}]/gu, '')
@@ -823,7 +832,6 @@
       utterance.rate = 1.0;
       utterance.pitch = 1.1;
 
-      // Auto-detect Hindi script (Devanagari)
       const isHindiScript = /[\u0900-\u097F]/.test(cleanText);
       const isHinglish = /\b(namaste|kaise|kya|karo|haan|nahin|suno|mujhe|tum|mera|kahani|aap|hai|hoon)\b/i.test(cleanText);
 
