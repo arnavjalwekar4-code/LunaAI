@@ -575,38 +575,56 @@
       const lower = text.toLowerCase();
       const memory = getStoredMemory();
 
-      // Check for developer/creator questions
+      // 1. Developer / Creator queries
       if (lower.includes('developer') || lower.includes('devloper') || lower.includes('creator') || lower.includes('who made you') || lower.includes('who created you')) {
         return `I was developed by Arnav! 🚀`;
       }
 
-      // Check for image generation prompts
+      // 2. Short affirmations & casual acknowledgments
+      if (/^(ok|okay|k|kk|nice|cool|awesome|great|got it|sure|alright|fine|yep|yeah)$/i.test(lower)) {
+        const casualReplies = [
+          "Awesome! Let me know if you need anything else 😊",
+          "Got it! I'm here if you have more questions 👍",
+          "Cool! What shall we talk about next?",
+          "Perfect! 😊"
+        ];
+        return casualReplies[Math.floor(Math.random() * casualReplies.length)];
+      }
+
+      // 3. Compliments
+      if (lower.includes('cool') || lower.includes('awesome') || lower.includes('smart') || lower.includes('nice') || lower.includes('best')) {
+        return `Aww, thank you! You're awesome too! 😊 How can I help you next?`;
+      }
+
+      // 4. Greetings
+      if (/^(hi|hello|hey|heyy|namaste|greetings)$/i.test(lower)) {
+        return `Hey there! What's on your mind today? ✨`;
+      }
+
+      // 5. Image generation prompts
       if (lower.includes('generate image') || lower.includes('draw') || lower.includes('create image') || lower.includes('picture of') || lower.includes('photo of') || lower.includes('image prompt')) {
         return `✨ **Image Prompt Recommendation** ✨\n\nI don't directly render image files, but here is an optimized prompt for Midjourney/DALL-E:\n\n> *"${text.replace(/generate image|draw|create image/gi, '').trim()}, cinematic lighting, hyper-realistic, 8k resolution, highly detailed digital art style --ar 16:9"*`;
       }
 
+      // 6. Memory check (User name)
+      if (memory.userName && (lower.includes('who am i') || lower.includes('my name') || lower.includes('mera naam'))) {
+        return `You are ${memory.userName}! I remember you 😊`;
+      }
+
+      // 7. Language detection (Hindi / Hinglish)
       const isHindiScript = /[\u0900-\u097F]/.test(text);
       const isHinglish = /\b(namaste|kaise|kya|karo|haan|nahin|suno|mujhe|tum|mera|kahani)\b/i.test(text);
-
-      if (memory.userName && (lower.includes('who am i') || lower.includes('my name') || lower.includes('mera naam'))) {
-        if (isHindiScript) return `आप ${memory.userName} हैं! मुझे याद है 😊`;
-        if (isHinglish) return `Aapka naam ${memory.userName} hai! Mujhe bilkul yaad hai 😊`;
-        return `You are ${memory.userName}! I remember you across our chats 😊`;
-      }
 
       if (isHindiScript) {
         return `नमस्ते! मैं आपकी क्या सहायता कर सकती हूँ? 🌸`;
       }
 
       if (isHinglish) {
-        return `Haan bilkul! Main aapki help karne ke liye tayar hoon ✨ Aap batayein kya karna hai?`;
+        return `Haan bilkul! Main aapki help karne ke liye tayar hoon ✨`;
       }
 
-      if (lower === 'hi' || lower === 'hello' || lower === 'hey') {
-        return `Hello! How can I help you today? 😊`;
-      }
-
-      return `I'm Luna! How can I assist you with "${text}"? 😊`;
+      // 8. General conversational fallback
+      return `Got it! Tell me more about that, or let me know what you'd like to work on next.`;
     }
 
     async function sendText() {
@@ -823,7 +841,7 @@
 
       let cleanText = text
         .replace(/\*\*|__|\*|_|`|>|#/g, '')
-        .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2300}-\u{23FF}]/gu, '')
+        .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2300}-\u{23FF}]/gu, '')
         .trim();
 
       if (!cleanText) return;
